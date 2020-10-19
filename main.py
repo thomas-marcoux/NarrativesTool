@@ -1,12 +1,3 @@
-"""
-'''
-Modified on Aug 1, 2020
-@author: oljohnson
-
-This is to populate narrative for each posts from blogposts table
-'''
-"""
-
 from nltk import tokenize
 import re
 import json
@@ -25,7 +16,7 @@ with open("stopwords.txt", "r", encoding="utf-8") as f:
 
 def process_narratives(corpus):
     narratives = {}
-    entity_count = {}
+    narratives = {}
     for text in tqdm(corpus, total=len(corpus), desc="Narratives"):
         item_narratives, item_entity_count, objectEntitiesList = process_posts(text)
         for key, value in item_narratives.items():
@@ -35,7 +26,7 @@ def process_narratives(corpus):
             else:
                 narratives[key] = value
                 entity_count[key] = item_entity_count[key]
-    return
+    return narratives, narratives
 
 def process_posts(text):
     countSentTotal = 0
@@ -71,4 +62,5 @@ if __name__ == "__main__":
             df = pd.read_csv(path, usecols=['content'])
             corpus = list(df.iloc[:, 0])
             print(f'Processing {f}')
-            process_narratives(corpus)
+            narratives, narratives = process_narratives(corpus)
+    print('Done')
